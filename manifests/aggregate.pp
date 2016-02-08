@@ -17,7 +17,7 @@ define sensu_check::aggregate (
   $dependencies       = undef,
   $occurrences        = undef,
   $aggregate          = undef,
-  $handler            = undef,
+  $handle             = undef,
   $tags               = undef,
   $tip                = undef,
   $page               = undef,
