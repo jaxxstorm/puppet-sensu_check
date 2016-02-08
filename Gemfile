@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+
+#gem 'rake'
+gem 'puppet-lint', :git => 'https://github.com/rodjek/puppet-lint.git'
+gem 'rspec', '~> 2.14.1'
+gem 'rspec-puppet', '~> 2.3.0'
+gem 'rspec-system-puppet'
+gem 'puppetlabs_spec_helper'
+gem 'puppet-syntax'
+gem 'rspec-puppet-utils'
+gem 'json'
+gem 'puppet', '~> 3.8.3'
