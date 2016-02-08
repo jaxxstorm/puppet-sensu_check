@@ -11,7 +11,7 @@ define sensu_check::server (
   $dependencies   = undef,
   $occurrences    = undef,
   $aggregate      = undef,
-  $handler        = undef,
+  $handle        = undef,
   $tags           = undef,
   $tip            = undef,
   $page           = undef,
