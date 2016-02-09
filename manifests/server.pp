@@ -53,7 +53,8 @@ define sensu_check::server (
     validate_array($tags)
     $tag_hash = { tags => $tags }
   }
-  
+
+
   sensu::check { $name:
     ensure       => $ensure,
     handlers     => $handlers,
