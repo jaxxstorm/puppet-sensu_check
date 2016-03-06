@@ -39,7 +39,7 @@ describe 'sensu_check::client' do
   end # end sensu params
 
   context 'set custom params' do
-    let(:params) { { :command => 'foo', :tip => 'A short sharp tip', :notification => 'A longer event summary', :tags => ['tag1', 'tag2'] }}
+    let(:params) { { :command => 'foo', :tip => 'A short sharp tip', :event_summary => 'A longer event summary', :tags => ['tag1', 'tag2'] }}
     it {
       should contain_sensu__check('example_check') \
         .with_ensure('present') \
@@ -48,7 +48,7 @@ describe 'sensu_check::client' do
         .with_handlers(['default']) \
         .with_custom({
           "tip" => "A short sharp tip",
-          "notification" => "A longer event summary",
+          "event_summary" => "A longer event summary",
           "tags" => ['tag1', 'tag2']
         })
     }

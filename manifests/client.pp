@@ -12,7 +12,7 @@ define sensu_check::client (
   $tags           = [],
   $tip            = undef,
   $type           = undef,
-  $notification   = undef,
+  $event_summary  = undef,
   $check_custom   = undef,
 ) {
 
@@ -40,9 +40,9 @@ define sensu_check::client (
     $tip_hash = { tip => $tip }
   }
 
-  if $notification {
-    validate_string($notification)
-    $notification_hash = { notification => $notification }
+  if $event_summary {
+    validate_string($event_summary)
+    $summary_hash = { event_summary => $event_summary }
   }
 
   if $tags {
@@ -62,7 +62,7 @@ define sensu_check::client (
     dependencies => $dependencies,
     type         => $type,
     occurrences  => $occurrences,
-    custom       => merge( $tip_hash, $notification_hash, $tag_hash, $check_custom  )
+    custom       => merge( $tip_hash, $summary_hash, $tag_hash, $check_custom  )
   }
 
 }
