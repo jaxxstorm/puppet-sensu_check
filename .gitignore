@@ -37,3 +37,6 @@ build/
 
 # Don't want the lockfile
 Gemfile.lock
+
+# Don't bring the fixtures with us
+spec/fixtures

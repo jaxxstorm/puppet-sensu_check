@@ -11,30 +11,25 @@ define sensu_check::server (
   $dependencies   = undef,
   $occurrences    = undef,
   $aggregate      = undef,
-  $handle        = undef,
-  $tags           = undef,
+  $handle         = undef,
+  $tags           = [],
   $tip            = undef,
-  $page           = undef,
   $type           = undef,
-  $create_ticket  = undef,
+  $event_summary  = undef,
   $check_custom   = undef,
 ) {
 
   # None of this will work without the sensu module
-  require ::sensu
+  include ::sensu
 
   # Some validation of params
-  validate_re($ensure)
+  validate_re($ensure, '^(present|absent)$')
   validate_array($handlers)
   validate_array($subscribers)
   validate_string($source)
   validate_string($tip)
   validate_string($dependencies)
   validate_array($tags)
-  validate_bool($page)
-  validate_bool($create_ticket)
-  validate_bool($aggregate)
-  validate_hash($check_custom)
 
   # Right, bear with me here. There's probably a better way..
   # Because puppet vars are immutable, we check if they exist
@@ -45,13 +40,20 @@ define sensu_check::server (
     $tip_hash = { tip => $tip }
   }
 
-  if $page {
-    $page_hash = { page => $page }
+  if $event_summary {
+    validate_string($event_summary)
+    $summary_hash = { event_summary => $event_summary }
   }
 
-  if $create_ticket {
-    $ticket_hash = { create_ticket => $create_ticket }
+  if $aggregate {
+    validate_bool($aggregate)
   }
+
+  if $tags {
+    validate_array($tags)
+    $tag_hash = { tags => $tags }
+  }
+
 
   sensu::check { $name:
     ensure       => $ensure,
@@ -62,12 +64,13 @@ define sensu_check::server (
     interval     => $interval,
     standalone   => false, # We're a server side check, so always false
     ttl          => $ttl,
+    aggregate    => $aggregate,
     source       => $source,
     refresh      => $refresh,
     dependencies => $dependencies,
     type         => $type,
     occurrences  => $occurrences,
-    custom       => merge( $tip_hash, $page_hash, $ticket_hash, $check_custom  )
+    custom       => merge( $tip_hash, $summary_hash, $tag_hash, $check_custom  )
   }
 
 }

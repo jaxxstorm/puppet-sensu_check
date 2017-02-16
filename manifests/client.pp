@@ -17,7 +17,7 @@ define sensu_check::client (
 ) {
 
   # None of this will work without the sensu module
-  require ::sensu
+  include ::sensu
 
   # Some validation of params
   validate_re($ensure, '^(present|absent)$')
